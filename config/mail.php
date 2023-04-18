@@ -35,13 +35,22 @@ return [
 
     'mailers' => [
         'smtp' => [
+            'driver' => env('MAIL_DRIVER', 'sendmail'),
             'transport' => 'smtp',
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
+            'port' => env('MAIL_PORT', 465),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
+            'auth_mode' => null,
+            'stream'     => [
+                'ssl' => [
+                    'allow_self_signed' => true,
+                    'verify_peer'       => false,   // <-------------- this is the important part 
+                    'verify_peer_name'  => false,
+                ],
+            ],
         ],
 
         'ses' => [
